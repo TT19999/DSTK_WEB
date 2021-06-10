@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ParkingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,9 @@ Route::get('/customer/map', function () {
 Route::get('/Business/Dashboard', function () {
     return view('/Business/dashboard');
 });
+
+Route::get('/Business/Parking', [ParkingController::class, 'getParkingForUser']);
+
+Route::get('/Business/AddParking',[ParkingController::class, 'addParking']);
+
+Route::post('/Business/AddParkingCar',[ParkingController::class, 'handleAdd']);

@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use function Psy\debug;
+use App\Models\CarPark;
+use Illuminate\Support\Facades\DB;
+
+class ParkingController extends Controller
+{
+    public function getParkingForUser(Request $request) {
+        $car = DB::table('CarParks')->where('user_id', 1)->get();
+        return view('Business/parking')->with(compact('car'));
+    }
+
+    public function addParking(Request $request) {
+        $car = DB::table('CarParks')->where('user_id', 1)->get();
+        return view("Business/addNewParking")->with(compact('car'));
+    }
+
+    public function handleAdd(Request $request) {
+        $input = $request->all();
+        $newParking = CarPark::create([
+            'user_id' => 1,
+            'title' => $request->input('title'),
+            'description' => $request->input('decription'),
+            'subDescription' => $request->input('subDecription'),
+            'location' => $request->input('location'),
+            'lat_map' => $request->input('Lat'),
+            'lng_map' => $request->input('Lnt'),
+            'city' => $request->input('city'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect('/Business/Parking');
+    }
+}

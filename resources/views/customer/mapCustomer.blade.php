@@ -20,6 +20,17 @@
             margin: 0;
             padding: 0;
         }
+
+        /*.map-marker-label {*/
+        /*    position: absolute;*/
+        /*    color: red;*/
+        /*    font-size: 16px;*/
+        /*    font-weight: bold;*/
+        /*    !* Use margin to position the text *!*/
+        /*    !* top, left position is the place of marker position *!*/
+        /*    margin-top: 0px;*/
+        /*    margin-left: 20px;*/
+        /*}*/
     </style>
     <script>
         var map; //Will contain map object.
@@ -51,7 +62,7 @@
 
         function initMap() {
             //The center location of our map.
-            var centerOfMap = new google.maps.LatLng(20.9782483, 105.7938184 );
+            var centerOfMap = new google.maps.LatLng('20.9782483', '105.7938184' );
 
 
 
@@ -72,6 +83,16 @@
             const localMarker = new google.maps.Marker({
                 position: centerOfMap,
                 title:"Hello World!",
+                icon: {
+                    labelOrigin: new google.maps.Point(16,64),
+                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                },
+                label: {
+                    text: "Hello world!",
+                    color: "red",
+                    fontWeight: "bold",
+                    fontSize: "16px"
+                },
                 map : map
             });
 
@@ -80,7 +101,7 @@
             });
 
 
-            //Listen for any clicks on the map.
+            // Listen for any clicks on the map.
             // google.maps.event.addListener(map, 'click', function(event) {
             //     var clickedLocation = event.latLng;
             //     console.log(clickedLocation);
@@ -114,7 +135,6 @@
             //Get location.
             var currentLocation = marker.getPosition();
             console.log(currentLocation);
-            //Add lat and lng values to a field that we can save.
         }
 
 
@@ -213,10 +233,10 @@
 <!--The div element for the map -->
 <div id="map"></div>
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-{{--<script--}}
-{{--        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9CKlY-57L2SQ6xiB1Zu0hPBfh5qfOSOw&callback=initMap&libraries=&v=weekly"--}}
-{{--        async--}}
-{{--></script>--}}
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9CKlY-57L2SQ6xiB1Zu0hPBfh5qfOSOw&callback=initMap&libraries=&v=weekly"
+        async
+></script>
 </body>
 <footer class="footer">
 
@@ -273,7 +293,6 @@
                         </ul>
                     </div>
                     <!-- /Footer Widget -->
-
                 </div>
 
                 <div class="col-lg-3 col-md-6">
