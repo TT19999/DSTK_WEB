@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class ParkingController extends Controller
 {
     public function getParkingForUser(Request $request) {
-        $car = DB::table('CarParks')->where('user_id', 1)->get();
-        return view('Business/parking')->with(compact('car'));
+        $cars = DB::table('CarParks')->where('user_id', 1)->get();
+        return view('Business/parking')->with(compact('cars'));
     }
 
     public function addParking(Request $request) {
@@ -35,5 +35,9 @@ class ParkingController extends Controller
         ]);
 
         return redirect('/Business/Parking');
+    }
+
+    public function exportData(Request $request) {
+        return view('/Business/exportData');
     }
 }

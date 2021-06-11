@@ -44,5 +44,13 @@ Route::get('/Business/Dashboard', function () {
 Route::get('/Business/Parking', [ParkingController::class, 'getParkingForUser']);
 
 Route::get('/Business/AddParking',[ParkingController::class, 'addParking']);
+Route::get('/Business/ExportData',[ParkingController::class, 'exportData']);
+Route::get('/Business/Account',function () {
+    return view('/Business/contact');
+});
+
+Route::get('/Business/Contact',function () {
+    return view('/Business/account');
+});
 
 Route::post('/Business/AddParkingCar',[ParkingController::class, 'handleAdd']);
