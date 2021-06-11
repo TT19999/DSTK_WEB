@@ -42,13 +42,31 @@
         }
 
         </script>
-        <div>
+
+
+        <div class="col-8">
+            <h3>Dự liệu so sánh các tháng với năm trước</h3>
+            <p style="color: #0d95e8">năm nay</p>
+            <p style="color: red">năm trước</p>
+            <div id="myChart"></div>
+        </div>
+
+        <div class="col-8">
             <div id="piechart"></div>
         </div>
-    <br>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+        zingchart.render({
+            id: 'myChart',
+            data: {
+                type: 'bar',
+                series: [
+                    { values: [54,60,52,35,30,30,32,25,37,41,45,49] },
+                    { values: [46,50,48,65,70,70,68,75,63,59,55,51] }
+                ]
+            },
 
-        <div id ="mountchart">
-
-        </div>
+        });
+    </script>
 
 @endsection

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Map</title>
+    <title>Map</title>
 
     {{--    <link rel="stylesheet" type="text/css" href="./style.css" />--}}
     {{--    <script src="./index.js"></script>--}}
@@ -35,73 +35,69 @@
     <script>
         var map; //Will contain map object.
         var marker = false; ////Has the user plotted their location marker?
-        const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        var data = "Hello World!";
-        let labelIndex = 0;
+
+        var jqueryarray = <?php echo json_encode($cars); ?>
+
+
         const contentString =
             '<div id="content">' +
-            '<div id="siteNotice">' +
-            "</div>" +
-            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
-            '<div id="bodyContent">' +
-            "<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large " +
-            "sandstone rock formation in the southern part of the " +
-            "Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) " +
-            "south west of the nearest large town, Alice Springs; 450&#160;km " +
-            "(280&#160;mi) by road. Kata Tjuta and Uluru are the two major " +
-            "features of the Uluru - Kata Tjuta National Park. Uluru is " +
-            "sacred to the Pitjantjatjara and Yankunytjatjara, the " +
-            "Aboriginal people of the area. It has many springs, waterholes, " +
-            "rock caves and ancient paintings. Uluru is listed as a World " +
-            "Heritage Site.</p>" +
-            '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-            "https://en.wikipedia.org/w/index.php?title=Uluru</a> " +
-            "(last visited June 22, 2009).</p>" +
-            "</div>" +
             "</div>";
+
 
         function initMap() {
             //The center location of our map.
             var centerOfMap = new google.maps.LatLng('20.9782483', '105.7938184' );
-
-
-
             //Map options.
             var options = {
                 center: centerOfMap, //Set center.
-                zoom: 15 //The zoom value.
+                zoom: 13//The zoom value.
             };
 
             //Create the map object.
             map = new google.maps.Map(document.getElementById('map'), options);
 
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-
-
-            const localMarker = new google.maps.Marker({
-                position: centerOfMap,
-                title:"Hello World!",
-                icon: {
-                    labelOrigin: new google.maps.Point(16,64),
-                    url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
-                },
-                label: {
-                    text: "Hello world!",
-                    color: "red",
-                    fontWeight: "bold",
-                    fontSize: "16px"
-                },
-                map : map
-            });
-
-            localMarker.addListener("click", function(event) {
-                infowindow.open(map, localMarker);
-            });
-
-
             // Listen for any clicks on the map.
+            for (let i=0; i<jqueryarray.length; ++i) {
+                // console.log(jqueryarray[i]);
+                const contentString =
+                    '<div>' +
+                    '<h3 id="firstHeading" class="firstHeading">' + jqueryarray[i]['title'] + '</h3>' +
+                    '<div >' +
+                    '<p> địa chỉ: ' + jqueryarray[i]['location'] + '</p>' +
+                    "<p> huong dan: " + jqueryarray[i]['subDescription'] + "</p>" +
+                    "</div>" +
+                    "</div>";
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
+                var position = new google.maps.LatLng(jqueryarray[i]['lat_map'], jqueryarray[i]['lng_map']);
+                //Map options.
+                var optionsOfCar = {
+                    center: position, //Set center.
+                    zoom: 13//The zoom value.
+                };
+
+                const localMarker = new google.maps.Marker({
+                    position: position,
+                    title:jqueryarray[i]['title'],
+                    icon: {
+                        labelOrigin: new google.maps.Point(16,64),
+                        url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                    },
+                    label: {
+                        text: jqueryarray[i]['title'],
+                        color: "red",
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                    },
+                    map : map
+                });
+
+                localMarker.addListener("click", function(event) {
+                    infowindow.open(map, localMarker);
+                });
+            }
             // google.maps.event.addListener(map, 'click', function(event) {
             //     var clickedLocation = event.latLng;
             //     console.log(clickedLocation);
@@ -139,12 +135,12 @@
 
 
         //Load the map when the page has finished loading.
-        google.maps.event.addDomListener(window, 'load', initMap);
+        // google.maps.event.addDomListener(window, 'load', initMap);
     </script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>HealthCare - @yield('title')</title>
+    <title>Map</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('images_global/logo.jpg') }}">
@@ -185,14 +181,14 @@
 								<span></span>
 							</span>
                 </a>
-                <a href="{{ route('customer.index') }}" class="navbar-brand logo">
-                    <img src="{{ asset('images_global/healthcare-full.jpg') }}" class="img-fluid" alt="Logo">
+                <a href="/customer/index" class="navbar-brand logo">
+                    <img src="{{ asset('images_global/img_1.png') }}" class="img-fluid" alt="Logo">
                 </a>
             </div>
             <div class="main-menu-wrapper">
                 <div class="menu-header">
-                    <a href="{{ route('customer.index') }}" class="menu-logo">
-                        <img src="{{ asset('images_global/healthcare-full.jpg') }}" class="img-fluid" alt="Logo">
+                    <a href="/customer/index" class="menu-logo">
+                        <img src="{{ asset('images_global/img_1.png') }}" class="img-fluid" alt="Logo">
                     </a>
                     <a id="menu_close" class="menu-close" href="javascript:void(0);">
                         <i class="fas fa-times"></i>
@@ -200,7 +196,7 @@
                 </div>
                 <ul class="main-nav">
                     <li class="">
-                        <a href="{{ route('customer.index') }}">Trang chủ</a>
+                        <a href="/customer/index">Trang chủ</a>
                     </li>
                     <li class="active">
                         <a href="/customer/map">Map</a>
@@ -208,23 +204,14 @@
 {{--                    <li>--}}
 {{--                        <a href="admin/index.html" target="_blank">Admin</a>--}}
 {{--                    </li>--}}
-                    <li class="login-link">
-                        <a href="login.html">Login / Signup</a>
-                    </li>
+{{--                    <li class="login-link">--}}
+{{--                        <a href="/login">Login for business</a>--}}
+{{--                    </li>--}}
                 </ul>
             </div>
             <ul class="nav header-navbar-rht">
-                <li class="nav-item contact-item">
-                    <div class="header-contact-img">
-                        <i class="far fa-hospital"></i>
-                    </div>
-                    <div class="header-contact-detail">
-                        <p class="contact-header">Contact</p>
-                        <p class="contact-info-header"> +1 315 369 5943</p>
-                    </div>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link header-login" href="login.html">login / Signup </a>
+                    <a class="nav-link header-login" href="/login">login </a>
                 </li>
             </ul>
         </nav>
@@ -302,7 +289,7 @@
                         <h2 class="footer-title">For Business</h2>
                         <ul>
                             <li><a href="appointments.html"><i class="fas fa-angle-double-right"></i> Map</a></li>
-                            <li><a href="login.html"><i class="fas fa-angle-double-right"></i> Login </a></li>
+                            <li><a href="/login"><i class="fas fa-angle-double-right"></i> Login </a></li>
                             <li><a href="/Business/Dashboard"><i class="fas fa-angle-double-right"></i> Business Dashboard </a></li>
                         </ul>
                     </div>
@@ -318,15 +305,11 @@
                         <div class="footer-contact-info">
                             <div class="footer-address">
                                 <span><i class="fas fa-map-marker-alt"></i></span>
-                                <p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+                                <p>Nhóm 15<br> Thiết kế công nghệ </p>
                             </div>
-                            <p>
-                                <i class="fas fa-phone-alt"></i>
-                                +1 315 369 5943
-                            </p>
                             <p class="mb-0">
                                 <i class="fas fa-envelope"></i>
-                                doccure@example.com
+                                tungpn@xyz199.com
                             </p>
                         </div>
                     </div>
@@ -346,11 +329,6 @@
             <!-- Copyright -->
             <div class="copyright">
                 <div class="row">
-                    <div class="col-md-6 col-lg-6">
-                        <div class="copyright-text">
-                            <p class="mb-0"><a href="templateshub.net">Templates Hub</a></p>
-                        </div>
-                    </div>
                     <div class="col-md-6 col-lg-6">
 
                         <!-- Copyright Menu -->

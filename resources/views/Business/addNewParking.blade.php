@@ -65,21 +65,62 @@
             "</div>" +
             "</div>";
 
+
+
         function initMap() {
             //The center location of our map.
             var centerOfMap = new google.maps.LatLng('20.9782483', '105.7938184' );
-
-
-
             //Map options.
             var options = {
                 center: centerOfMap, //Set center.
                 zoom: 13//The zoom value.
             };
-
+            var jqueryarray = <?php echo json_encode($cars); ?>
             //Create the map object.
             map = new google.maps.Map(document.getElementById('map'), options);
 
+            // Listen for any clicks on the map.
+            for (let i=0; i<jqueryarray.length; ++i) {
+                // console.log(jqueryarray[i]);
+                const contentString =
+                    '<div>' +
+                    '<h3 id="firstHeading" class="firstHeading">' + jqueryarray[i]['title'] + '</h3>' +
+                    '<div >' +
+                    '<p> địa chỉ: ' + jqueryarray[i]['location'] + '</p>' +
+                    "<p> huong dan: " + jqueryarray[i]['subDescription'] + "</p>" +
+                    "</div>" +
+                    "</div>";
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
+                var position = new google.maps.LatLng(jqueryarray[i]['lat_map'], jqueryarray[i]['lng_map']);
+                //Map options.
+                var optionsOfCar = {
+                    center: position, //Set center.
+                    zoom: 13//The zoom value.
+                };
+
+                const localMarker = new google.maps.Marker({
+                    position: position,
+                    title: jqueryarray[i]['title'],
+                    icon: {
+                        labelOrigin: new google.maps.Point(16, 64),
+                        url: "https://drive.google.com/uc?id=0B3RD6FDNxXbdVXRhZHFnV2xaS1E"
+                    },
+                    label: {
+                        text: jqueryarray[i]['title'],
+                        color: "red",
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                    },
+                    map: map
+                });
+
+                localMarker.addListener("click", function (event) {
+                    infowindow.open(map, localMarker);
+                });
+            }
             // Listen for any clicks on the map.
             google.maps.event.addListener(map, 'click', function(event) {
                 var clickedLocation = event.latLng;
@@ -124,7 +165,7 @@
 
 
         //Load the map when the page has finished loading.
-        google.maps.event.addDomListener(window, 'load', initMap);
+        // google.maps.event.addDomListener(window, 'load', initMap);
     </script>
 
     <meta charset="utf-8">
@@ -204,7 +245,7 @@
                     <div class="main-menu-wrapper">
                         <div class="menu-header">
                             <a href="{{ route('customer.index') }}" class="menu-logo">
-                                <img src="{{ asset('images_global/healthcare-full.jpg') }}" class="img-fluid" alt="Logo">
+                                <img src="{{ asset('images_global/img_1.png') }}" class="img-fluid" alt="Logo">
                             </a>
                             <a id="menu_close" class="menu-close" href="javascript:void(0);">
                                 <i class="fas fa-times"></i>

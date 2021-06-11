@@ -65,7 +65,11 @@
     <script src="assets/js/html5shiv.min.js"></script>
     <script src="assets/js/respond.min.js"></script>
     <![endif]-->
+    <script>
+        function handleClickButtonEmploy () {
 
+        }
+    </script>
 </head>
 <body>
 <div class="wrapper d-flex align-items-stretch">
@@ -115,7 +119,7 @@
                     <div class="main-menu-wrapper">
                         <div class="menu-header">
                             <a href="{{ route('customer.index') }}" class="menu-logo">
-                                <img src="{{ asset('images_global/healthcare-full.jpg') }}" class="img-fluid" alt="Logo">
+                                <img src="{{ asset('images_global/img_1.png') }}" class="img-fluid" alt="Logo">
                             </a>
                             <a id="menu_close" class="menu-close" href="javascript:void(0);">
                                 <i class="fas fa-times"></i>
@@ -140,49 +144,186 @@
             </header>
         </div>
         <div id="content" class="p-4 p-md-5 pt-5">
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Email</label>
-                        <input type="text" class="form-control" id="inputEmail4" placeholder="Email">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Tên</label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="Tên">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress">Địa chỉ</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Địa chỉ">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputCity">City</label>
-                        <input type="text" class="form-control" id="inputCity">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState">State</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>Về bãi xe</option>
-                            <option>Về tài khoản nhân viên</option>
-                            <option>Vể việc thanh toán</option>
-                            <option>Khác</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Nội dung</span>
-                    </div>
-                    <textarea class="form-control" ></textarea>
-                </div>
-                <p></p>
-                <button type="submit" class="btn btn-primary">Gửi</button>
-            </form>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mã số nhân viên</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Ngày Sinh</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+                </thead>
+                @if(!empty($emplyess))
+                @foreach($employees as $index => $employee )
+                    <tbody>
+                    <tr>
+                        <th scope="row">{{$index+1}}</th>
+                        <td>aa</td>
+                        <td>bbb</td>
+                        <td>ccc</td>
+                        <td>
+                            <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#EditEmployee"> Sửa </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModalCenter"> Xóa </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                @endforeach
+                    @endif
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>007</td>
+                    <td>Phùng Nhật Tùng</td>
+                    <td>1999-10-01</td>
+                    <td>
+                        <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#EditEmployee"> Sửa </button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModalCenter"> Xóa </button>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>700</td>
+                    <td>Nguyễn Thị Minh Tâm</td>
+                    <td>1999-06-18</td>
+                    <td>
+                        <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#EditEmployee"> Sửa </button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModalCenter"> Xóa </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#addNewEmployee">
+                Them nhan vien
+            </button>
         </div>
         <br/>
+
+        <div class="modal fade" id="addNewEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa nhân viên</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="/Business/AddNewEmployee">
+                            @csrf
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input id ="Lat1" type="hidden" class="form-control" placeholder="Lat" name="Lat">
+                                    <input id ="Lng1" type="hidden" class="form-control" placeholder="Lnt" name="Lnt">
+                                    <label for="inputEmail4">Tên Nhân Viên</label>
+                                    <input type="text" class="form-control" id="inputEmail4" placeholder="tên của bãi xe" name="title">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Ngày Sinh</label>
+                                    <input type="text" class="form-control" id="inputPassword4" placeholder="địa chỉ cơ bản" name="location">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">Giới thiệu </label>
+                                <input type="text" class="form-control" id="inputAddress" placeholder="Sơ qua cá nhân" name="decription">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress2">Vị trí</label>
+                                <input type="text" class="form-control" id="inputAddress2" placeholder="Vị trí trong công ty" name="subDecription">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputCity">Chứng minh nhân dân</label>
+                                    <input type="text" class="form-control" id="inputCity" name="Chứng minh thư nhân dân/căn cước công dân">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputState">Mã nhân viên</label>
+                                    <input type="text" class="form-control" id="inputState" name="Mã Nhân Viên">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="EditEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa bãi xe</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="/Business/AddNewEmployee">
+                            @csrf
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input id ="Lat1" type="hidden" class="form-control" placeholder="Lat" name="Lat">
+                                    <input id ="Lng1" type="hidden" class="form-control" placeholder="Lnt" name="Lnt">
+                                    <label for="inputEmail4">Tên Nhân Viên</label>
+                                    <input type="text" class="form-control" id="inputEmail4" placeholder="tên của bãi xe" name="title" value="Phùng Nhật Tùng">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Ngày Sinh</label>
+                                    <input type="text" class="form-control" id="inputPassword4" placeholder="địa chỉ cơ bản" name="location" value="1999-10-01">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">Giới thiệu </label>
+                                <input type="text" class="form-control" id="inputAddress" placeholder="Sơ qua cá nhân" name="decription" value="nhân viên công ty b">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress2">Vị trí</label>
+                                <input type="text" class="form-control" id="inputAddress2" placeholder="Vị trí trong công ty" name="subDecription" value="intern">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputCity">Chứng minh nhân dân</label>
+                                    <input type="text" class="form-control" id="inputCity" name="Chứng minh thư nhân dân/căn cước công dân" value="000199001428">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputState">Mã nhân viên</label>
+                                    <input type="text" class="form-control" id="inputState" name="Mã Nhân Viên" value="007">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Xóa nhân viên</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="DELETE" action="/Business/DeleteParkingCar">
+                            @csrf
+                            <div class="form-group">
+                                <label for="inputAddress">Bạn có chắc chắn muốn xóa nhân viên này không hay không</label>
+                            </div>
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -190,5 +331,7 @@
 <script src="{{asset("assets/js/Admin/popper.js")}}"></script>
 <script src="{{asset("assets/js/Admin/bootstrap.min.js")}}"></script>
 <script src="{{asset("assets/js/Admin/main.js")}}"></script>
+
+
 </body>
 </html>

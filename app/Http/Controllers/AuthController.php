@@ -12,7 +12,10 @@ class AuthController extends Controller
                 return redirect('/admin/dashboard');
             }
             if($request->email == 'customer') {
-                return redirect('/index');
+                return redirect('customer/index');
+            }
+            if($request->email == 'business') {
+                return redirect('/Business/Dashboard');
             }
         }
     }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ParkingController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,12 @@ use App\Http\Controllers\ParkingController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect();
 });
 
-Route::get('/map' , function () {
-   return view('map');
-});
+//Route::get('/map' , function () {
+//   return view('map');
+//});
 
 Route::get('/login', function () {
     return view('/auth/login');
@@ -29,13 +30,11 @@ Route::get('/login', function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/index', function () {
+Route::get('customer/index', function () {
     return view('customer/index');
 })->name('customer.index');
 
-Route::get('/customer/map', function () {
-    return view('customer/mapCustomer');
-});
+Route::get('/customer/map', [CustomerController::class, 'map']);
 
 Route::get('/Business/Dashboard', function () {
     return view('/Business/dashboard');
@@ -46,11 +45,12 @@ Route::get('/Business/Parking', [ParkingController::class, 'getParkingForUser'])
 Route::get('/Business/AddParking',[ParkingController::class, 'addParking']);
 Route::get('/Business/ExportData',[ParkingController::class, 'exportData']);
 Route::get('/Business/Account',function () {
-    return view('/Business/contact');
-});
-
-Route::get('/Business/Contact',function () {
     return view('/Business/account');
 });
 
+Route::get('/Business/Contact',function () {
+    return view('/Business/contact');
+});
+
 Route::post('/Business/AddParkingCar',[ParkingController::class, 'handleAdd']);
+Route::post('/Business/AddNewEmployee',[ParkingController::class, 'handleAddEmployee']);

@@ -18,7 +18,7 @@ class CreateTableStaffAccount extends Migration
             $table->string('carpark_id');
             $table->string('employee_id');
             $table->string('employee_name');
-            $table->string('employee_bỉthday');
+            $table->string('employee_birthday');
             $table->string('position_power');
             $table->string('identity_card_id');
             $table->string('identity_card_time');
