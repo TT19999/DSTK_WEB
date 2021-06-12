@@ -59,4 +59,38 @@ class ParkingController extends Controller
 //
 //        return redirect('/Business/Account');
     }
+
+    public function getFreeSpace(){
+        // $filename = "/home/tungpn/Desktop/app/react code/DSTK_WEB/resources/c++/data.txt";
+        // $fp = fopen($filename, "r");
+        
+        // $contents = fread($fp, filesize($filename));
+        
+        // echo ;
+        // fclose($fp);
+
+        $csv = array();
+        $file = fopen('/home/tungpn/Desktop/app/react code/DSTK_WEB/resources/c++/data.txt', 'r');
+
+        while (($result = fgetcsv($file)) !== false)
+        {
+            $csv[] = $result;
+        }
+
+        fclose($file);
+        if(!empty($csv)) {
+            return response()->json([
+                'freeSpace'=> $csv[0][0],
+                'totalSpace' => $csv[0][1]
+            ]); 
+        }
+        else {
+            return response()->json([
+                'freeSpace'=> 0,
+                'totalSpace' => 0
+            ]); 
+        }
+
+        
+    }
 }

@@ -54,3 +54,6 @@ Route::get('/Business/Contact',function () {
 
 Route::post('/Business/AddParkingCar',[ParkingController::class, 'handleAdd']);
 Route::post('/Business/AddNewEmployee',[ParkingController::class, 'handleAddEmployee']);
+
+
+Route::get('/api/getFreeSpace', [ParkingController::class, 'getFreeSpace']);

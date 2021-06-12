@@ -55,13 +55,14 @@
 
             //Create the map object.
             map = new google.maps.Map(document.getElementById('map'), options);
-
+            var infoWindowArray = [];
             // Listen for any clicks on the map.
             for (let i=0; i<jqueryarray.length; ++i) {
                 // console.log(jqueryarray[i]);
                 const contentString =
                     '<div>' +
                     '<h3 id="firstHeading" class="firstHeading">' + jqueryarray[i]['title'] + '</h3>' +
+                    '<h5>   còn trống:' + (i + 1) * (10 + i) + '</h5>' +
                     '<div >' +
                     '<p> địa chỉ: ' + jqueryarray[i]['location'] + '</p>' +
                     "<p> huong dan: " + jqueryarray[i]['subDescription'] + "</p>" +
@@ -70,7 +71,7 @@
                 var infowindow = new google.maps.InfoWindow({
                     content: contentString
                 });
-
+                infoWindowArray.push(infowindow)
                 var position = new google.maps.LatLng(jqueryarray[i]['lat_map'], jqueryarray[i]['lng_map']);
                 //Map options.
                 var optionsOfCar = {
@@ -95,7 +96,7 @@
                 });
 
                 localMarker.addListener("click", function(event) {
-                    infowindow.open(map, localMarker);
+                    infoWindowArray[i].open(map, localMarker);
                 });
             }
             // google.maps.event.addListener(map, 'click', function(event) {

@@ -30,6 +30,10 @@
         div.hidden {
             display: none;
         }
+
+        .position {
+            width: 200px
+        }
         /*.map-marker-label {*/
         /*    position: absolute;*/
         /*    color: red;*/
@@ -55,7 +59,7 @@
             '<div id="content">' +
             "</div>";
 
-
+        
         function initMap() {
             //The center location of our map.
             var centerOfMap = new google.maps.LatLng('20.9782483', '105.7938184' );
@@ -64,16 +68,20 @@
                 center: centerOfMap, //Set center.
                 zoom: 13//The zoom value.
             };
-
             //Create the map object.
             map = new google.maps.Map(document.getElementById('map'), options);
-
+            var infoWindowArray = [];
             // Listen for any clicks on the map.
+            
             for (let i=0; i<jqueryarray.length; ++i) {
+                let freeSpace = (i + 1) * (10 + i);
+                let name = '#freespace' + i;
+                $(name).text(freeSpace);
                 // console.log(jqueryarray[i]);
                 const contentString =
                     '<div>' +
                     '<h3 id="firstHeading" class="firstHeading">' + jqueryarray[i]['title'] + '</h3>' +
+                    '<h5>   còn trống:' + freeSpace + '</h5>' +
                     '<div >' +
                     '<p> địa chỉ: ' + jqueryarray[i]['location'] + '</p>' +
                     "<p> huong dan: " + jqueryarray[i]['subDescription'] + "</p>" +
@@ -82,6 +90,8 @@
                 var infowindow = new google.maps.InfoWindow({
                     content: contentString
                 });
+                infoWindowArray.push(infowindow)
+
 
                 var position = new google.maps.LatLng(jqueryarray[i]['lat_map'], jqueryarray[i]['lng_map']);
                 //Map options.
@@ -107,9 +117,10 @@
                 });
 
                 localMarker.addListener("click", function(event) {
-                    infowindow.open(map, localMarker);
+                    infoWindowArray[i].open(map, localMarker);
                 });
             }
+
             // google.maps.event.addListener(map, 'click', function(event) {
             //     var clickedLocation = event.latLng;
             //     console.log(clickedLocation);
@@ -267,8 +278,9 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Tên bãi xe</th>
-                    <th scope="col">tọa độ</th>
+                    <th class='position' scope="col-2">tọa độ</th>
                     <th scope="col">Địa điểm</th>
+                    <th scope="col">Còn trống</th>
                     <th scope="col">Hành động</th>
                 </tr>
                 </thead>
@@ -277,8 +289,9 @@
             <tr>
                 <th scope="row">{{$index+1}}</th>
                 <td>{{$car->title}}</td>
-                <td>{{$car->lat_map . ' , ' . $car->lng_map}}</td>
+                <td class='position' scope="col-2">{{$car->lat_map . ' , ' . $car->lng_map}}</td>
                 <td>{{$car->description}}</td>
+                <td id='<?php echo 'freespace' . $index?>'></td>
                 <td>
                     <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#editCarParking"> Sửa </button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModalCenter"> Xóa </button>

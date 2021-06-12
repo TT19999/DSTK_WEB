@@ -45,7 +45,7 @@
 
 
         <div class="col-8">
-            <h3>Dự liệu so sánh các tháng với năm trước</h3>
+            <h3>Bảng tỉ lệ số lượng xe đỗ  với cùng kì năm trước</h3>
             <p style="color: #0d95e8">năm nay</p>
             <p style="color: red">năm trước</p>
             <div id="myChart"></div>
